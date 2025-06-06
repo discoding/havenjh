@@ -1,0 +1,33 @@
+name: Flutter Web Build
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.5'
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Build Flutter Web
+        run: flutter build web
+
+      - name: Deploy to Vercel branch
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git checkout --orphan vercel-deploy
+          git --work-tree build/web add --all
+          git --work-tree build/web commit -m 'Deploy to Vercel'
+          git push origin HEAD:vercel-deploy --force
