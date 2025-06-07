@@ -1,4 +1,4 @@
-name: Flutter Web Build
+name: Flutter Web Build and Deploy to Firebase
 
 on:
   push:
@@ -23,11 +23,9 @@ jobs:
       - name: Build Flutter Web
         run: flutter build web
 
-      - name: Deploy to Vercel branch
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git checkout --orphan vercel-deploy
-          git --work-tree build/web add --all
-          git --work-tree build/web commit -m 'Deploy to Vercel'
-          git push origin HEAD:vercel-deploy --force
+      - name: Deploy to Firebase Hosting
+        uses: w9jds/firebase-action@v13.0.0
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
