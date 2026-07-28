@@ -28,8 +28,9 @@ jobs:
           cd build
           zip -r ../havenjh-web.zip web
 
-      - name: Upload Build
-        uses: actions/upload-artifact@v4
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: havenjh-web
-          path: havenjh-web.zip
+         tag_name: latest
+         name: Latest HavenJH Build
+         files: havenjh-web.zip
