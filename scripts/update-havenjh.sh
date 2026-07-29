@@ -2,25 +2,34 @@
 
 set -e
 
-echo "======================================"
-echo " HavenJH Update"
-echo "======================================"
+REPO="discoding/havenjh"
+ZIP="havenjh-web.zip"
 
-cd /tmp
+WORK="/tmp/havenjh-update"
+TARGET="/var/www/html"
 
-echo "Download nieuwste versie..."
-wget -O havenjh-web.zip https://github.com/discoding/havenjh/releases/latest/download/havenjh-web.zip
+rm -rf "$WORK"
+mkdir -p "$WORK"
 
-echo "Uitpakken..."
-rm -rf web
-unzip -oq havenjh-web.zip
+cd "$WORK"
 
-echo "Bestanden installeren..."
-sudo rm -rf /var/www/html/*
-sudo cp -r web/* /var/www/html/
+echo "Laatste release ophalen..."
 
-echo "Nginx herstarten..."
-sudo systemctl restart nginx
+URL=$(curl -s https://api.github.com/repos/$REPO/releases/latest \
+| grep browser_download_url \
+| grep "$ZIP" \
+| cut -d '"' -f4)
 
-echo ""
-echo "✅ HavenJH update klaar"
+wget "$URL" -O "$ZIP"
+
+unzip -o "$ZIP"
+
+echo "Nieuwe website plaatsen..."
+
+rm -rf "$TARGET"/*
+
+cp -r web/* "$TARGET"
+
+chown -R www-data:www-data "$TARGET"
+
+echo "Update klaar"
