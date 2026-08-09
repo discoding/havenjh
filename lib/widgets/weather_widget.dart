@@ -18,18 +18,20 @@ class _WeatherWidgetState extends State<WeatherWidget> {
 
     ui_web.platformViewRegistry.registerViewFactory(
       _viewId,
-      (int viewId) {
+          (int viewId) {
         final iframe = web.HTMLIFrameElement()
-          ..width = '320'
-          ..height = '250'
           ..src =
               'https://www.windfinder.com/widget/forecast/vereiniging_hylper_haven_friesland_netherlands'
-          ..style.border = 'none';
+          ..style.border = '0'
+          ..style.width = '100%'
+          ..style.height = '100%'
+          ..allowFullscreen = true;
 
         return iframe;
       },
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +48,10 @@ class _WeatherWidgetState extends State<WeatherWidget> {
               ),
             ),
           ),
+
           SizedBox(
-            width: 320,
-            height: 250,
+            height: 500,
+            width: double.infinity,
             child: HtmlElementView(
               viewType: _viewId,
             ),
