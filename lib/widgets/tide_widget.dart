@@ -28,7 +28,7 @@ class _TideWidgetState extends State<TideWidget> {
 
 // Elk uur opnieuw ophalen.
     _timer = Timer.periodic(
-      const Duration(hours: 1),
+      const Duration(minutes: 5),
       (_) => loadTides(),
     );
   }
