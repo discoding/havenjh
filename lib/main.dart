@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   builder: (context, constraints) {
     final portrait = constraints.maxHeight > constraints.maxWidth;
 
-    return portrait
+    return true
         ? ListView(
             children: [
               WeatherWidget(),
