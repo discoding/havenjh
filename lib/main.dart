@@ -17,29 +17,31 @@ class MyApp extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: LayoutBuilder(
-            builder: (context, constraints) {
-              return constraints.maxWidth > 600
-                  ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(child: WeatherWidget()),
-                        SizedBox(width: 16),
-                        Expanded(child: TideWidget()),
-                        SizedBox(width: 16),
-                        Expanded(child: ScheepvaartberichtenWidget()),
-                      ],
-                    )
-                  : ListView(
-                      children: [
-                        WeatherWidget(),
-                        SizedBox(height: 16),
-                        TideWidget(),
-                        SizedBox(height: 16),
-                        ScheepvaartberichtenWidget(),
-                      ],
-                    );
-            },
-          ),
+  builder: (context, constraints) {
+    final portrait = constraints.maxHeight > constraints.maxWidth;
+
+    return portrait
+        ? ListView(
+            children: [
+              WeatherWidget(),
+              SizedBox(height: 16),
+              TideWidget(),
+              SizedBox(height: 16),
+              ScheepvaartberichtenWidget(),
+            ],
+          )
+        : Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: WeatherWidget()),
+              SizedBox(width: 16),
+              Expanded(child: TideWidget()),
+              SizedBox(width: 16),
+              Expanded(child: ScheepvaartberichtenWidget()),
+            ],
+          );
+  },
+)
         ),
       ),
     );
