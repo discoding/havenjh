@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'widgets/scheepvaartberichten_widget.dart';
 import 'widgets/weather_widget.dart';
+import 'widgets/buienradar_widget.dart';
 import 'widgets/tide_widget.dart';
 
 void main() {
@@ -23,6 +24,8 @@ class MyApp extends StatelessWidget {
     return true
         ? ListView(
             children: [
+              BuienradarWidget
+              SizedBox(height: 16),
               WeatherWidget(),
               SizedBox(height: 16),
               TideWidget(),
