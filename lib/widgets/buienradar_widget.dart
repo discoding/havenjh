@@ -21,15 +21,11 @@ class _BuienradarWidgetState extends State<BuienradarWidget> {
       (int viewId) {
         final iframe = web.HTMLIFrameElement()
           ..src =
-              'https://image.buienradar.nl/2.0/image/single/RadarMapRainNL'
-              '?height=512'
-              '&width=500'
-              '&renderBackground=True'
-              '&renderBranding=True'
-              '&renderText=True'
+              'https://www.buienradar.nl/nederland/neerslag/buienradar/'
           ..style.border = '0'
           ..style.width = '100%'
-          ..style.height = '100%';
+          ..style.height = '100%'
+          ..allowFullscreen = true;
 
         return iframe;
       },
@@ -53,7 +49,7 @@ class _BuienradarWidgetState extends State<BuienradarWidget> {
             ),
           ),
           SizedBox(
-            height: 512,
+            height: 600,
             width: double.infinity,
             child: HtmlElementView(
               viewType: _viewId,
