@@ -10,7 +10,7 @@ class BuienradarWidget extends StatefulWidget {
 }
 
 class _BuienradarWidgetState extends State<BuienradarWidget> {
-  static const String _viewId = 'buienradar-radar';
+  static const String _viewId = 'buienradar-five-days';
 
   @override
   void initState() {
@@ -20,11 +20,10 @@ class _BuienradarWidgetState extends State<BuienradarWidget> {
       _viewId,
       (int viewId) {
         final iframe = web.HTMLIFrameElement()
-          ..src =
-              'https://www.buienradar.nl/nederland/neerslag/buienradar/'
+          ..src = 'https://gadgets.buienradar.nl/gadget/radarfivedays'
           ..style.border = '0'
-          ..style.width = '100%'
-          ..style.height = '100%'
+          ..style.width = '256px'
+          ..style.height = '406px'
           ..allowFullscreen = true;
 
         return iframe;
@@ -49,10 +48,12 @@ class _BuienradarWidgetState extends State<BuienradarWidget> {
             ),
           ),
           SizedBox(
-            height: 600,
+            height: 406,
             width: double.infinity,
-            child: HtmlElementView(
-              viewType: _viewId,
+            child: Center(
+              child: HtmlElementView(
+                viewType: _viewId,
+              ),
             ),
           ),
         ],
