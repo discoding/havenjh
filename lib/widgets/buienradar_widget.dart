@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui_web' as ui_web;
 import 'package:flutter/material.dart';
 import 'package:web/web.dart' as web;
@@ -10,25 +11,48 @@ class BuienradarWidget extends StatefulWidget {
 }
 
 class _BuienradarWidgetState extends State<BuienradarWidget> {
-  static const String _viewId = 'buienradar-five-days';
+  Timer? _refreshTimer;
+
+  int _version = 0;
 
   @override
   void initState() {
     super.initState();
 
+    _registerBuienradar();
+
+    // Iedere 5 minuten de volledige iframe opnieuw laden.
+    _refreshTimer = Timer.periodic(
+      const Duration(minutes: 5),
+      (_) {
+        if (mounted) {
+          setState(() {
+            _version++;
+          });
+        }
+      },
+    );
+  }
+
+  void _registerBuienradar() {
     ui_web.platformViewRegistry.registerViewFactory(
-      _viewId,
+      'buienradar-five-days',
       (int viewId) {
         final iframe = web.HTMLIFrameElement()
           ..src = 'https://gadgets.buienradar.nl/gadget/radarfivedays'
           ..style.border = '0'
           ..style.width = '256px'
-          ..style.height = '406px'
-          ..allowFullscreen = true;
+          ..style.height = '406px';
 
         return iframe;
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _refreshTimer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -47,12 +71,14 @@ class _BuienradarWidgetState extends State<BuienradarWidget> {
               ),
             ),
           ),
+
           SizedBox(
             height: 406,
             width: double.infinity,
             child: Center(
               child: HtmlElementView(
-                viewType: _viewId,
+                key: ValueKey(_version),
+                viewType: 'buienradar-five-days',
               ),
             ),
           ),
