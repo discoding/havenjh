@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     return true
         ? ListView(
             children: [
-              BuienradarWidget
+              BuienradarWidget(),
               SizedBox(height: 16),
               WeatherWidget(),
               SizedBox(height: 16),
