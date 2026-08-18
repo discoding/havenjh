@@ -20,7 +20,7 @@ class _BuienradarWidgetState extends State<BuienradarWidget> {
       _viewId,
       (int viewId) {
         final iframe = web.HTMLIFrameElement()
-          ..src = 'https://image.buienradar.nl/2.0/image/animation/RadarMapRainWebMercatorNL'
+          ..src = 'https://gadgets.buienradar.nl/gadget/radarfivedays'
           ..style.border = '0'
           ..style.width = '256px'
           ..style.height = '406px'
